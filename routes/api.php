@@ -2,6 +2,7 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use YoutubeCompilator\Helper;
 
 /*
 |--------------------------------------------------------------------------
@@ -16,4 +17,22 @@ use Illuminate\Support\Facades\Route;
 
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
+});
+
+Route::post('url', function (Request $request) {
+    $url = $request->get('url');
+    $link = App\Models\Link::firstOrCreate(
+        ['url' => $url]
+    );
+
+    if (!$link->title) {
+        $video_id = Helper::getId($url);
+        $link->title = Helper::get_video_title($video_id);
+        $link->save();
+    }
+
+    return response()->json([
+        'url' => $link->url,
+        'title' => $link->title
+    ]);
 });
