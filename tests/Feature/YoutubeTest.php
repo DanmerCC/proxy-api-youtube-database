@@ -13,8 +13,8 @@ class YoutubeTest extends TestCase
      */
     public function test_example(): void
     {
-        $response = $this->post('/api/url', ['url' => 'https://www.youtube.com/watch?v=cDiWGuqzzio']);
-        dd($response->getContent());
+        $response = $this->post('/api/url', ['url' => 'https://www.youtube.com/watch?v=n0-tOAOVL6I']);
+        //dd($response->getContent());
         $response->assertStatus(200);
     }
 }
